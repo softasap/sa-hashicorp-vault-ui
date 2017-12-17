@@ -29,7 +29,7 @@
       - goldfish
 
   - name: Goldfish | Download distribution
-    get_url: url="https://github.com/Caiyeon/goldfish/releases/download/{{goldfish_version}}/goldfish-linux-amd64" dest="{{goldfish_install_dir}}/goldfish"
+    get_url: url="https://github.com/Caiyeon/goldfish/releases/download/{{goldfish_version}}/goldfish-linux-amd64" dest="{{goldfish_install_dir}}/goldfish"  mode="u=rwx,g=rx,o=rx"
     become: yes
     when: goldfish_present | failed
     tags:
@@ -65,6 +65,6 @@
   - name: Goldfish | Enable service
     service: name="goldfish" enabled="yes"
     become: yes
-    when: option_goldfish_service
+    when: option_goldfish_service and docker_test is not defined
     tags:
       - goldfish

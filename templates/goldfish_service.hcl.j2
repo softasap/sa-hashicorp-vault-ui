@@ -26,6 +26,7 @@ listener "tcp" {
 	# goldfish will request new certificates at half-life and hot-reload
 	# when using this option, bootstrapping at launch time is REQUIRED
 	tls_pki_path     = "{{goldfish_tls_pki_path}}" # "pki/issue/<role_name>"
+{% endif %}
 }
 
 # [Required] vault defines how goldfish should bootstrap to vault

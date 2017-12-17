@@ -29,7 +29,7 @@
       - goldfish
 
   - name: Goldfish | Download distribution
-    get_url: url="https://github.com/Caiyeon/goldfish/releases/download/{{goldfish_version}}/goldfish-linux-amd64" dest="{{goldfish_install_dir}}/goldfish"
+    get_url: url="https://github.com/Caiyeon/goldfish/releases/download/v{{goldfish_version}}/goldfish-linux-amd64" dest="{{goldfish_install_dir}}/goldfish"
     become: yes
     when: goldfish_present | failed
     tags:
@@ -46,7 +46,7 @@
       - goldfish
 
   - name: Goldfish | Copy hcl helpers
-    template: src="{{role_dir}}/templates/{{item}}.hcl.j2}}" dest="{{goldfish_install_dir}}/{{item.}}.hcl" owner="root" group="root" mode="u=rw,g=r,o="
+    template: src="{{role_dir}}/templates/{{item}}.hcl.j2" dest="{{goldfish_install_dir}}/{{item}}.hcl" owner="root" group="root" mode="u=rw,g=r,o="
     become: yes
     when: goldfish_present | failed
     with_items:

@@ -7,7 +7,7 @@ After=network.target vault-server.service
 Requires=network.target
 
 [Service]
-ExecStart=
+ExecStart={{goldfish_install_dir}}/goldfish -config={{goldfish_install_dir}}/goldfish_service.hcl
 
 User={{goldfish_user}}
 Group={{goldfish_user}}

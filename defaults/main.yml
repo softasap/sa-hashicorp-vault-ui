@@ -1,0 +1,27 @@
+---
+# defaults file for sa-hashicorp-vault-ui
+
+role_dir: "{{role_path}}"
+option_goldfish_service: true
+
+goldfish_user: goldfish
+goldfish_version: 0.8.0
+goldfish_install_dir: /opt/goldfish
+goldfish_address: ""
+goldfish_port: 8021
+goldfish_tls_disable: 1
+goldfish_tls_autoredirect: 0
+
+# goldfish_tls_cert_file: specify [Option 1] the certificate file
+# goldfish_tls_key_file: specify # [Option 1] the private key file
+# goldfish_tls_pki_path: specify
+# provide a pki endpoint for goldfish to fetch certificates from.
+# goldfish will request new certificates at half-life and hot-reload
+# when using this option, bootstrapping at launch time is REQUIRED
+
+goldfish_tls_autoredirect: 0
+goldfish_vault_address: "http://127.0.0.1:8200"
+goldfish_tls_skip_verify: 0
+goldfish_runtime_config: "secret/goldfish"
+goldfish_approle_login: "auth/approle/login"
+goldfish_approle_id: "goldfish"

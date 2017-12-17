@@ -1,0 +1,3 @@
+---
+# tasks file for sa-hashicorp-vault-ui
+  - include_files: tasks_goldfish.yml 

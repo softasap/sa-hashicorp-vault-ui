@@ -1,0 +1,19 @@
+# CI/CD managed
+# Do NOT modify this file by hand!
+
+[Unit]
+Description=Goldfish - hashicorp vault UI
+After=network.target vault-server.service
+Requires=network.target
+
+[Service]
+ExecStart=
+
+User={{goldfish_user}}
+Group={{goldfish_user}}
+Restart=always
+RestartSec=5
+TimeoutSec=5
+
+[Install]
+WantedBy=multi-user.target

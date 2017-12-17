@@ -1,0 +1,2 @@
+# generate a secret-id from approle. This MUST be wrapped!
+vault write -f -wrap-ttl=5m auth/approle/role/goldfish/secret-id

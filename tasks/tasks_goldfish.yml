@@ -1,0 +1,70 @@
+---
+
+  - name: GoldFish | Check if is present
+    command: "test -x {{goldfish_install_dir}}/goldfish"
+    ignore_errors: yes
+    register: goldfish_present
+    tags:
+      - goldfish
+
+  - name: GoldFish | Create goldfish group
+    group: name="{{goldfish_user}}" state="present"
+    when: option_goldfish_service
+    become: yes
+    tags:
+      - goldfish
+
+  - name: Goldfish | Create goldfish user
+    become: yes
+    user: name="{{goldfish_user}}" group="{{goldfish_user}}"  comment="GoldFish vault ui user" system="yes" shell="/bin/nologin" createhome="no"
+    when: option_goldfish_service
+    tags:
+      - goldfish
+
+  - name: Goldfish | create target directory
+    file: path="{{goldfish_install_dir}}" state="directory"
+    become: yes
+    when: goldfish_present | failed
+    tags:
+      - goldfish
+
+  - name: Goldfish | Download distribution
+    get_url: url="https://github.com/Caiyeon/goldfish/releases/download/{{goldfish_version}}/goldfish-linux-amd64" dest="{{goldfish_install_dir}}/goldfish"
+    become: yes
+    when: goldfish_present | failed
+    tags:
+      - goldfish
+
+  - name: Goldfish | Copy sh helpers
+    template: src="{{role_dir}}/templates/{{item}}.sh.j2" dest="{{goldfish_install_dir}}/{{item}}.sh" owner="root" group="root" mode="u=rwx,g=rx,o="
+    become: yes
+    when: goldfish_present | failed
+    with_items:
+      - goldfish_app_role
+      - goldfish_bootstrap
+    tags:
+      - goldfish
+
+  - name: Goldfish | Copy hcl helpers
+    template: src="{{role_dir}}/templates/{{item}}.hcl.j2}}" dest="{{goldfish_install_dir}}/{{item.}}.hcl" owner="root" group="root" mode="u=rw,g=r,o="
+    become: yes
+    when: goldfish_present | failed
+    with_items:
+      - goldfish_service
+      - goldfish_vault_policy
+    tags:
+      - goldfish
+
+  - name: Goldfish | create service
+    template: src="{{role_dir}}/templates/goldfish.service.j2" dest="/etc/systemd/system/goldfish.service"
+    become: yes
+    when: option_goldfish_service
+    tags:
+      - goldfish
+
+  - name: Goldfish | Enable service
+    service: name="goldfish" enabled="yes"
+    become: yes
+    when: option_goldfish_service
+    tags:
+      - goldfish

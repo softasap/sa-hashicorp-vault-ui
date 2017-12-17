@@ -1,0 +1,18 @@
+#!/bin/sh
+
+vault auth-enable approle
+
+vault policy-write goldfish ./goldfish.hcl
+
+vault write auth/approle/role/goldfish role_name=goldfish policies=default,goldfish \
+secret_id_num_uses=1 secret_id_ttl=5m period=24h token_ttl=0 token_max_ttl=0
+
+vault write auth/approle/role/goldfish/role-id role_id=goldfish
+
+# production goldfish needs a generic secret endpoint. See Configuration page for details
+vault write secret/goldfish DefaultSecretPath="secret/" UserTransitKey="usertransit" BulletinPath="secret/bulletins/"
+
+# [optional] to enable transit encryption:
+# write key ServerTransitKey="goldfish" in the runtime settings (above)
+# and run the following line to initialize the key:
+vault write -f transit/keys/goldfish

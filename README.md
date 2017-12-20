@@ -3,7 +3,8 @@ sa-hashicorp-vault-ui
 
 [![Build Status](https://travis-ci.org/softasap/sa-hashicorp-vault-ui.svg?branch=master)](https://travis-ci.org/softasap/sa-hashicorp-vault-ui)
 
-If for some reason you are feeling confused by using Vault console, that is basic role for 3rd party vault ui install
+If for some reason you are feeling confused by using Vault console, that is basic role for 3rd party vault ui install.
+By default ui is binded to localhost:8201 (next to vault port). It is highly not recommended to expose it outside of the vault box.
 
 
 Example of usage:

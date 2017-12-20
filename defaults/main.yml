@@ -8,7 +8,7 @@ goldfish_user: goldfish
 goldfish_version: 0.8.0
 goldfish_install_dir: /opt/goldfish
 goldfish_address: ""
-goldfish_port: 8021
+goldfish_port: 8201
 goldfish_tls_disable: 1
 goldfish_tls_autoredirect: 0
 

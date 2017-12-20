@@ -36,7 +36,7 @@
       - goldfish
 
   - name: Goldfish | Copy sh helpers
-    template: src="{{role_dir}}/templates/{{item}}.sh.j2" dest="{{goldfish_install_dir}}/{{item}}.sh" owner="root" group="goldfisg" mode="u=rwx,g=rx,o="
+    template: src="{{role_dir}}/templates/{{item}}.sh.j2" dest="{{goldfish_install_dir}}/{{item}}.sh" owner="root" group="goldfish" mode="u=rwx,g=rx,o="
     become: yes
     when: goldfish_present | failed
     with_items:

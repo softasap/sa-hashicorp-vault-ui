@@ -24,21 +24,21 @@
   - name: Goldfish | create target directory
     file: path="{{goldfish_install_dir}}" state="directory" owner="root" group="goldfish"
     become: yes
-    when: goldfish_present | failed
+    when: goldfish_present is failed
     tags:
       - goldfish
 
   - name: Goldfish | Download distribution
     get_url: url="https://github.com/Caiyeon/goldfish/releases/download/v{{goldfish_version}}/goldfish-linux-amd64" dest="{{goldfish_install_dir}}/goldfish" mode="u=rwx,g=rx,o=" owner="root" group="goldfish"
     become: yes
-    when: goldfish_present | failed
+    when: goldfish_present is failed
     tags:
       - goldfish
 
   - name: Goldfish | Copy sh helpers
     template: src="{{role_dir}}/templates/{{item}}.sh.j2" dest="{{goldfish_install_dir}}/{{item}}.sh" owner="root" group="goldfish" mode="u=rwx,g=rx,o="
     become: yes
-    when: goldfish_present | failed
+    when: goldfish_present is failed
     with_items:
       - goldfish_app_role
       - goldfish_bootstrap
@@ -48,7 +48,7 @@
   - name: Goldfish | Copy hcl helpers
     template: src="{{role_dir}}/templates/{{item}}.hcl.j2" dest="{{goldfish_install_dir}}/{{item}}.hcl" owner="root" group="goldfish" mode="u=rw,g=r,o="
     become: yes
-    when: goldfish_present | failed
+    when: goldfish_present is failed
     with_items:
       - goldfish_service
       - goldfish_vault_policy
@@ -62,10 +62,18 @@
     tags:
       - goldfish
 
+  - name: Goldfish | Setcap dependency
+    apt: pkg="libcap2-bin" state="present"
+    become: yes
+    when: goldfish_present is failed
+    tags:
+      - goldfish
+
+
   - name: Goldfish | Allow mloc (remain sensitive data in memory)
     shell: setcap cap_ipc_lock=+ep {{goldfish_install_dir}}/goldfish
     become: yes
-    when: goldfish_present | failed
+    when: goldfish_present is failed
     tags:
       - goldfish
 
